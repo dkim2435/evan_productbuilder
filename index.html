@@ -2,104 +2,90 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>오늘 저녁 뭐 먹지? - 한식 메뉴 추천</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>K-Beauty Guide</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app">
-        <header>
-            <div class="header-controls">
-                <button class="control-btn" id="theme-toggle" aria-label="Toggle theme">
-                    <span class="theme-icon">🌙</span>
-                </button>
-                <button class="control-btn" id="lang-toggle" aria-label="Toggle language">
-                    <span class="lang-icon">EN</span>
-                </button>
-            </div>
-            <h1>🍜 <span data-i18n="title">오늘 뭐 먹지?</span></h1>
-            <p class="tagline" data-i18n="tagline">스와이프로 저녁 메뉴를 정해보세요</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>✨ K-Beauty Guide</h1>
+            <p class="subtitle">Your Ultimate Korean Beauty Companion</p>
         </header>
 
-        <div class="swipe-container">
-            <div class="card-stack">
-                <!-- Previous card (blurred) -->
-                <div class="menu-card prev-card" id="prev-card">
-                    <div class="card-image"></div>
-                    <div class="card-content">
-                        <span class="card-tag"></span>
-                        <h2 class="card-name"></h2>
-                        <p class="card-description"></p>
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="quiz">Skin Quiz</button>
+            <button class="tab-btn" data-tab="procedures">Procedures</button>
+            <button class="tab-btn" data-tab="scanner">Scanner</button>
+        </nav>
+
+        <!-- Tab Contents -->
+        <main class="tab-content">
+            <!-- Skin Quiz Tab -->
+            <section id="quiz" class="tab-panel active">
+                <!-- Quiz Start Screen -->
+                <div id="quiz-start" class="quiz-screen">
+                    <div class="quiz-intro-card">
+                        <div class="quiz-icon">🔬</div>
+                        <h2>Find Your Skin Type</h2>
+                        <h3>나의 피부 타입 찾기</h3>
+                        <p>Answer 7 simple questions to discover your skin type and get personalized K-Beauty recommendations!</p>
+                        <p class="korean">7가지 간단한 질문에 답하고 나만의 K-뷰티 추천을 받아보세요!</p>
+                        <button id="start-quiz-btn" class="primary-btn">Start Quiz 시작하기</button>
                     </div>
                 </div>
 
-                <!-- Current card -->
-                <div class="menu-card current-card" id="menu-card">
-                    <div class="card-image"></div>
-                    <div class="card-content">
-                        <span class="card-tag"></span>
-                        <h2 class="card-name"></h2>
-                        <p class="card-description"></p>
+                <!-- Quiz Questions Screen -->
+                <div id="quiz-questions" class="quiz-screen hidden">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                        <span id="progress-text" class="progress-text">1 / 7</span>
                     </div>
-                    <div class="swipe-hint">
-                        <span class="hint-left" data-i18n="hintLeft">← 다음 메뉴</span>
-                        <span class="hint-right" data-i18n="hintRight">레시피 보기 →</span>
-                    </div>
+                    <div id="question-container" class="question-container"></div>
                 </div>
 
-                <!-- Next card (blurred) -->
-                <div class="menu-card next-card" id="next-card">
-                    <div class="card-image"></div>
-                    <div class="card-content">
-                        <span class="card-tag"></span>
-                        <h2 class="card-name"></h2>
-                        <p class="card-description"></p>
-                    </div>
+                <!-- Quiz Result Screen -->
+                <div id="quiz-result" class="quiz-screen hidden">
+                    <div id="result-content" class="result-card"></div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <div class="action-buttons">
-            <button class="btn-skip" id="btn-skip">
-                <span>✕</span>
-                <small data-i18n="btnSkip">다음</small>
-            </button>
-            <button class="btn-recipe" id="btn-recipe">
-                <span>📖</span>
-                <small data-i18n="btnRecipe">레시피</small>
-            </button>
-        </div>
+            <!-- Procedures Tab -->
+            <section id="procedures" class="tab-panel hidden">
+                <h2 class="section-title">Korean Dermatology Procedures</h2>
+                <p class="section-subtitle">한국 피부과 인기 시술</p>
+                <div class="procedures-grid" id="procedures-grid"></div>
+            </section>
 
-        <!-- Recipe Modal -->
-        <div class="modal" id="recipe-modal">
-            <div class="modal-content">
-                <button class="modal-close" id="modal-close">✕</button>
-                <div class="recipe-header">
-                    <span class="recipe-emoji" id="recipe-emoji"></span>
-                    <h2 class="recipe-title" id="recipe-title"></h2>
-                    <span class="recipe-tag" id="recipe-tag"></span>
+            <!-- Scanner Tab -->
+            <section id="scanner" class="tab-panel hidden">
+                <div class="coming-soon-card">
+                    <div class="scanner-icon">📷</div>
+                    <h2>Product Scanner</h2>
+                    <h3>제품 스캐너</h3>
+                    <div class="coming-soon-badge">Coming Soon</div>
+                    <p>Exciting features in development:</p>
+                    <ul class="feature-list">
+                        <li>🔍 Scan product barcodes for ingredient analysis</li>
+                        <li>📊 Get safety ratings and reviews</li>
+                        <li>💡 Find similar products at better prices</li>
+                        <li>🌿 Check for harmful ingredients</li>
+                        <li>🇰🇷 Korean product translations</li>
+                    </ul>
                 </div>
-                <div class="recipe-body">
-                    <h3>🥘 <span data-i18n="ingredients">재료</span></h3>
-                    <ul class="ingredients" id="ingredients"></ul>
-                    <h3>👨‍🍳 <span data-i18n="steps">만드는 법</span></h3>
-                    <ol class="steps" id="steps"></ol>
-                    <h3>💡 <span data-i18n="tip">팁</span></h3>
-                    <p class="tip" id="tip"></p>
-                </div>
-                <div class="recipe-rating">
-                    <div class="rating-counts">
-                        <span class="likes"><span id="like-count">0</span> <span data-i18n="peopleLike">명이 좋아해요</span></span>
-                        <span class="dislikes"><span id="dislike-count">0</span> <span data-i18n="peopleDislike">명이 별로래요</span></span>
-                    </div>
-                    <div class="rating-buttons">
-                        <button class="btn-like" id="btn-like">👍 <span data-i18n="delicious">맛있어요!</span></button>
-                        <button class="btn-dislike" id="btn-dislike">👎 <span data-i18n="notGood">별로예요</span></button>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with 💖 for K-Beauty lovers worldwide</p>
+        </footer>
     </div>
+
     <script src="main.js"></script>
 </body>
 </html>
