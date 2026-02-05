@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>K-Beauty Guide</title>
+    <title>K-Beauty Guide — Skin Type Quiz, Personal Color Test & Clinic Finder for Beginners</title>
+    <meta name="description" content="Free K-Beauty guide for beginners. Take our skin type quiz, discover your personal color season, browse Korean dermatology clinics in Gangnam, and learn about popular aesthetic procedures like Botox, filler, and laser treatments.">
+    <meta name="keywords" content="K-Beauty, Korean skincare, skin type quiz, personal color test, Gangnam clinics, Korean dermatology, Botox Korea, filler Korea, laser toning, skin booster, K-Beauty guide for beginners">
+    <meta name="author" content="K-Beauty Guide">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="K-Beauty Guide — Skin Quiz, Personal Color & Clinic Finder">
+    <meta property="og:description" content="Free interactive guide to Korean beauty. Find your skin type, discover your seasonal color palette, and explore top-rated clinics in Seoul.">
+    <meta property="og:type" content="website">
     <meta name="google-adsense-account" content="ca-pub-7280155441452276">
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7280155441452276"
@@ -85,44 +92,56 @@
 
             <!-- Products Tab -->
             <section id="products" class="tab-panel hidden">
-                <h2 class="section-title">Product Finder</h2>
-                <p class="section-subtitle">내 피부에 맞는 제품 찾기</p>
+                <h2 class="section-title">K-Beauty Product Guide</h2>
+                <p class="section-subtitle">K-뷰티 제품 가이드</p>
 
-                <!-- Product Scanner - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "바코드 스캐너 기능 개발해줘. 카메라로 바코드 스캔하면 제품 성분 분석해서 보여주고,
-                    내 피부타입에 맞는지 판단해줘. Open Food Facts API나 화해 앱 같은 성분 DB 연동 필요."
-                    필요: 카메라 API, 바코드 인식 라이브러리(QuaggaJS), 성분 DB API
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">📷</div>
-                    <h3>Ingredient Scanner</h3>
-                    <p class="feature-korean">성분 스캐너</p>
-                    <p class="feature-desc">Scan any K-beauty product to analyze ingredients and check if it's right for your skin.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- 10-Step Routine Guide -->
+                <div class="content-card">
+                    <h3>The Korean 10-Step Skincare Routine</h3>
+                    <p class="content-subtitle">한국식 10단계 스킨케어 루틴</p>
+                    <p class="content-text">The famous Korean skincare routine focuses on layering lightweight products for maximum hydration and protection. Here is the complete order and what each step does for your skin:</p>
+                    <div class="step-list">
+                        <div class="step-item"><span class="step-num">1</span><div class="step-info"><strong>Oil Cleanser</strong> <span class="step-kr">오일 클렌저</span><p>Removes makeup, sunscreen, and oil-based impurities. Massage onto dry skin, then rinse with water.</p></div></div>
+                        <div class="step-item"><span class="step-num">2</span><div class="step-info"><strong>Water Cleanser</strong> <span class="step-kr">폼 클렌저</span><p>Removes remaining water-based impurities like sweat and dirt. This double-cleanse method ensures a perfectly clean base.</p></div></div>
+                        <div class="step-item"><span class="step-num">3</span><div class="step-info"><strong>Exfoliator</strong> <span class="step-kr">각질 제거제</span><p>Use 1-2 times per week to remove dead skin cells. Choose between physical scrubs or chemical exfoliants (AHA/BHA).</p></div></div>
+                        <div class="step-item"><span class="step-num">4</span><div class="step-info"><strong>Toner</strong> <span class="step-kr">토너</span><p>Balances skin pH and preps skin to absorb the next products better. Pat gently into skin with hands.</p></div></div>
+                        <div class="step-item"><span class="step-num">5</span><div class="step-info"><strong>Essence</strong> <span class="step-kr">에센스</span><p>The heart of Korean skincare. A lightweight, hydrating layer that promotes cell turnover and radiance.</p></div></div>
+                        <div class="step-item"><span class="step-num">6</span><div class="step-info"><strong>Serum / Ampoule</strong> <span class="step-kr">세럼 / 앰플</span><p>Concentrated treatments targeting specific concerns like wrinkles, dark spots, or acne.</p></div></div>
+                        <div class="step-item"><span class="step-num">7</span><div class="step-info"><strong>Sheet Mask</strong> <span class="step-kr">시트 마스크</span><p>Use 1-3 times per week for an intense boost of hydration and nutrients. Leave on for 15-20 minutes.</p></div></div>
+                        <div class="step-item"><span class="step-num">8</span><div class="step-info"><strong>Eye Cream</strong> <span class="step-kr">아이크림</span><p>Delicate eye area needs special care. Gently pat around the orbital bone to prevent fine lines.</p></div></div>
+                        <div class="step-item"><span class="step-num">9</span><div class="step-info"><strong>Moisturizer</strong> <span class="step-kr">보습제</span><p>Seals in all previous layers. Choose gel for oily skin, cream for dry skin, or lotion for combination.</p></div></div>
+                        <div class="step-item"><span class="step-num">10</span><div class="step-info"><strong>Sunscreen</strong> <span class="step-kr">선크림</span><p>The most important step! Apply every morning, rain or shine. Korean sunscreens are known for their lightweight, non-greasy formulas.</p></div></div>
+                    </div>
                 </div>
 
-                <!-- Product Recommendations -->
-                <!--
-                    🔧 개발 명령어: "피부타입별 제품 추천 기능 만들어줘. 퀴즈 결과 기반으로 추천하고,
-                    각 제품에 쿠팡 파트너스 링크 연결해줘. 쿠팡 API 키는 [KEY] 야."
-                    필요: 쿠팡 파트너스 가입, 제품 데이터베이스
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">🛍️</div>
-                    <h3>Personalized Picks</h3>
-                    <p class="feature-korean">맞춤 제품 추천</p>
-                    <p class="feature-desc">Get product recommendations based on your skin quiz results. Shop directly with our curated links.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Key Ingredients Guide -->
+                <div class="content-card">
+                    <h3>Popular K-Beauty Ingredients</h3>
+                    <p class="content-subtitle">인기 K-뷰티 성분 가이드</p>
+                    <p class="content-text">Understanding ingredients helps you choose the right products for your skin. Here are the most popular ingredients found in Korean skincare and what they do:</p>
+                    <div class="ingredient-grid">
+                        <div class="ingredient-item"><div class="ingredient-icon">🐌</div><div><strong>Snail Mucin</strong><p>Hydrates, repairs damaged skin, fades scars. Found in COSRX Snail Mucin Essence.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🌿</div><div><strong>Centella Asiatica (CICA)</strong><p>Calms inflammation, strengthens skin barrier. Best for sensitive and acne-prone skin.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">💧</div><div><strong>Hyaluronic Acid</strong><p>Holds 1000x its weight in water. Plumps skin and reduces fine lines instantly.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🍚</div><div><strong>Rice Extract</strong><p>Traditional Korean ingredient for brightening. Evens skin tone and adds natural glow.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🫖</div><div><strong>Green Tea</strong><p>Rich in antioxidants, controls oil production, and soothes irritated skin.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🧴</div><div><strong>Niacinamide (Vitamin B3)</strong><p>Minimizes pores, controls oil, brightens dark spots. Works for all skin types.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🌙</div><div><strong>Retinol</strong><p>Gold standard for anti-aging. Boosts collagen, reduces wrinkles. Start with low concentrations.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🧪</div><div><strong>BHA (Salicylic Acid)</strong><p>Oil-soluble acid that penetrates pores. Best for blackheads, acne, and oily skin.</p></div></div>
+                    </div>
                 </div>
 
-                <!-- Product Compare -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">⚖️</div>
-                    <h3>Product Compare</h3>
-                    <p class="feature-korean">제품 비교</p>
-                    <p class="feature-desc">Compare ingredients and prices across similar products to find the best match.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Beginner Tips -->
+                <div class="content-card">
+                    <h3>K-Beauty Beginner Tips</h3>
+                    <p class="content-subtitle">K-뷰티 초보자 팁</p>
+                    <div class="tip-list">
+                        <div class="tip-item"><strong>Start simple.</strong> You do not need all 10 steps. Begin with cleanser, moisturizer, and sunscreen, then add one product at a time.</div>
+                        <div class="tip-item"><strong>Patch test everything.</strong> Apply new products on a small area of your jaw or behind your ear for 24 hours before full application.</div>
+                        <div class="tip-item"><strong>Give products time.</strong> Most skincare needs 4-6 weeks to show results. Do not switch products every few days.</div>
+                        <div class="tip-item"><strong>SPF is non-negotiable.</strong> Korean sunscreens are lightweight and cosmetically elegant. Apply generously every morning.</div>
+                        <div class="tip-item"><strong>Hydration over everything.</strong> Korean skincare philosophy prioritizes keeping skin hydrated as the foundation of all skin health.</div>
+                    </div>
                 </div>
             </section>
 
@@ -164,18 +183,19 @@
                 <h2 class="section-title">AI Beauty Analysis</h2>
                 <p class="section-subtitle">AI 뷰티 분석</p>
 
-                <!-- Face Analysis - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "AI 얼굴 분석 기능 만들어줘. 셀카 찍으면 얼굴형, 이목구비 비율 분석하고
-                    퍼스널컬러 진단해줘. 어울리는 메이크업, 헤어스타일도 추천해줘."
-                    필요: Face API (Azure/AWS), 얼굴 분석 모델, 이미지 업로드
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">🪞</div>
-                    <h3>Face Shape Analysis</h3>
-                    <p class="feature-korean">얼굴형 분석</p>
-                    <p class="feature-desc">Upload a selfie to discover your face shape and get personalized makeup & hairstyle tips.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Face Shape Guide -->
+                <div class="content-card">
+                    <h3>Face Shape Guide</h3>
+                    <p class="content-subtitle">얼굴형 가이드</p>
+                    <p class="content-text">Understanding your face shape helps you choose the most flattering hairstyles, glasses, and makeup contouring techniques. Here are the most common face shapes:</p>
+                    <div class="face-shape-grid">
+                        <div class="face-shape-item"><span class="face-shape-icon">🥚</span><div><strong>Oval 타원형</strong><p>Balanced proportions, slightly wider at cheekbones. Considered the most versatile shape — most styles work well.</p></div></div>
+                        <div class="face-shape-item"><span class="face-shape-icon">🟢</span><div><strong>Round 둥근형</strong><p>Equal width and length with soft angles. Add angles with contouring and try layered or side-parted hairstyles.</p></div></div>
+                        <div class="face-shape-item"><span class="face-shape-icon">🔷</span><div><strong>Square 사각형</strong><p>Strong jawline with equal width at forehead, cheeks, and jaw. Soften angles with wavy hair and round earrings.</p></div></div>
+                        <div class="face-shape-item"><span class="face-shape-icon">💎</span><div><strong>Diamond 다이아몬드형</strong><p>Narrow forehead and jaw, widest at cheekbones. Highlight your cheekbones and try side-swept bangs.</p></div></div>
+                        <div class="face-shape-item"><span class="face-shape-icon">💗</span><div><strong>Heart 하트형</strong><p>Wide forehead tapering to a narrow chin. Balance with chin-length bobs and soft, wispy bangs.</p></div></div>
+                        <div class="face-shape-item"><span class="face-shape-icon">📏</span><div><strong>Long 긴형</strong><p>Longer than wide with a long forehead or chin. Add width with side-parted styles and horizontal layers.</p></div></div>
+                    </div>
                 </div>
 
                 <!-- Personal Color Test -->
@@ -207,32 +227,31 @@
                     </div>
                 </div>
 
-                <!-- Surgery Simulation - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "성형 시뮬레이션 기능 만들어줘. 내 사진으로 쌍커풀, 코, 턱 등
-                    성형 후 모습 미리볼 수 있게. 슬라이더로 정도 조절 가능하게."
-                    필요: 얼굴 랜드마크 감지, 이미지 변형 라이브러리, Face Mesh
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">✨</div>
-                    <h3>Surgery Simulator</h3>
-                    <p class="feature-korean">성형 시뮬레이션</p>
-                    <p class="feature-desc">Preview potential results for double eyelids, nose, jawline and more on your own photo.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Popular Procedures Explained -->
+                <div class="content-card">
+                    <h3>Understanding K-Beauty Procedures</h3>
+                    <p class="content-subtitle">K-뷰티 시술 이해하기</p>
+                    <p class="content-text">Korea is the global capital of aesthetic procedures. Here is what first-timers should know before visiting a clinic:</p>
+                    <div class="tip-list">
+                        <div class="tip-item"><strong>Consultation is always first.</strong> Every reputable clinic provides a free consultation. The doctor examines your skin and recommends the right treatment.</div>
+                        <div class="tip-item"><strong>Non-surgical is mainstream.</strong> Most popular treatments like Botox, fillers, and laser toning are non-surgical with little to no downtime.</div>
+                        <div class="tip-item"><strong>Prices are competitive.</strong> Korean clinics offer world-class treatments at a fraction of Western prices, which is why medical tourism is booming.</div>
+                        <div class="tip-item"><strong>Maintenance matters.</strong> Botox lasts 3-6 months, fillers 6-18 months, and laser results are cumulative. Plan for follow-up visits.</div>
+                        <div class="tip-item"><strong>Ask about English support.</strong> Many Gangnam clinics have English-speaking staff or translators. Check our Clinics tab for English-friendly options.</div>
+                    </div>
                 </div>
 
-                <!-- Fortune/Face Reading - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "AI 관상 보는 기능 만들어줘. 재미로 보는 관상 분석이고,
-                    얼굴 특징 기반으로 성격, 운세 등 알려줘. 너무 심각하지 않게 재미 위주로."
-                    필요: 얼굴 특징 분석, 관상 데이터베이스
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">🔮</div>
-                    <h3>AI Face Reading</h3>
-                    <p class="feature-korean">AI 관상</p>
-                    <p class="feature-desc">Just for fun! Get a lighthearted face reading based on your facial features.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Skin Tone & Makeup Guide -->
+                <div class="content-card">
+                    <h3>Color Theory & Makeup</h3>
+                    <p class="content-subtitle">컬러 이론 & 메이크업</p>
+                    <p class="content-text">Your personal color season affects which makeup shades look most natural and flattering on you. Here is a quick guide for each season:</p>
+                    <div class="makeup-guide">
+                        <div class="makeup-season"><strong>Spring Warm 봄 웜</strong><p>Foundation: Warm beige. Lip: Coral, peach. Blush: Apricot. Eye: Warm brown, gold shimmer.</p></div>
+                        <div class="makeup-season"><strong>Summer Cool 여름 쿨</strong><p>Foundation: Pink beige. Lip: Rose pink, mauve. Blush: Soft pink. Eye: Taupe, lavender.</p></div>
+                        <div class="makeup-season"><strong>Fall Warm 가을 웜</strong><p>Foundation: Golden beige. Lip: Brick red, terracotta. Blush: Peach brown. Eye: Copper, olive.</p></div>
+                        <div class="makeup-season"><strong>Winter Cool 겨울 쿨</strong><p>Foundation: Neutral to cool. Lip: Berry, wine, true red. Blush: Cool pink. Eye: Charcoal, plum.</p></div>
+                    </div>
                 </div>
             </section>
 
@@ -241,60 +260,75 @@
                 <h2 class="section-title">Wellness & Lifestyle</h2>
                 <p class="section-subtitle">웰니스 & 라이프스타일</p>
 
-                <!-- Skin-Diet Connection - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "피부와 식단 연결해서, 피부 고민별로 먹으면 좋은 음식,
-                    피해야 할 음식 알려주는 기능 만들어줘. 여드름엔 이거 피해라 이런 식으로."
-                    필요: 피부-영양 데이터베이스
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">🍎</div>
-                    <h3>Skin-Food Guide</h3>
-                    <p class="feature-korean">피부를 위한 음식</p>
-                    <p class="feature-desc">Learn which foods help or hurt your specific skin concerns.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Skin-Food Guide -->
+                <div class="content-card">
+                    <h3>Skin-Food Connection</h3>
+                    <p class="content-subtitle">피부와 음식의 관계</p>
+                    <p class="content-text">What you eat directly affects your skin. Korean beauty philosophy emphasizes inner health as the foundation of outer beauty. Here are the best and worst foods for common skin concerns:</p>
+                    <div class="food-guide">
+                        <div class="food-section">
+                            <h4>For Acne-Prone Skin 여드름 피부</h4>
+                            <p class="food-good">Eat: Fatty fish (salmon, mackerel), green vegetables, berries, green tea, probiotics (kimchi, yogurt)</p>
+                            <p class="food-bad">Avoid: Dairy products, refined sugar, white bread, greasy fried foods, alcohol</p>
+                        </div>
+                        <div class="food-section">
+                            <h4>For Dry Skin 건성 피부</h4>
+                            <p class="food-good">Eat: Avocado, nuts and seeds, olive oil, sweet potato, water-rich fruits (watermelon, cucumber)</p>
+                            <p class="food-bad">Avoid: Excessive caffeine, salty snacks, alcohol, processed foods</p>
+                        </div>
+                        <div class="food-section">
+                            <h4>For Anti-Aging 노화 방지</h4>
+                            <p class="food-good">Eat: Blueberries, dark chocolate, tomatoes, spinach, bone broth, collagen-rich foods</p>
+                            <p class="food-bad">Avoid: Excessive sugar, charred or heavily processed meats, trans fats</p>
+                        </div>
+                        <div class="food-section">
+                            <h4>For Brightening 피부 미백</h4>
+                            <p class="food-good">Eat: Citrus fruits (vitamin C), papaya, bell peppers, turmeric, tomatoes (lycopene)</p>
+                            <p class="food-bad">Avoid: Excessive alcohol, refined carbs, high-sodium foods</p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Diet Planner - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "다이어트 식단 플래너 만들어줘. 목표 체중, 현재 체중 입력하면
-                    일일 칼로리 계산하고 한국 음식 위주로 식단 추천해줘."
-                    필요: 칼로리 계산 로직, 한국 음식 데이터베이스
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">🥗</div>
-                    <h3>Diet Planner</h3>
-                    <p class="feature-korean">식단 플래너</p>
-                    <p class="feature-desc">Get personalized meal plans with Korean foods to reach your health goals.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Korean Superfoods -->
+                <div class="content-card">
+                    <h3>Korean Superfoods for Skin</h3>
+                    <p class="content-subtitle">피부를 위한 한국 슈퍼푸드</p>
+                    <p class="content-text">Korean cuisine is packed with skin-friendly ingredients that have been used for centuries. Incorporate these traditional foods into your diet for glowing skin:</p>
+                    <div class="ingredient-grid">
+                        <div class="ingredient-item"><div class="ingredient-icon">🥬</div><div><strong>Kimchi 김치</strong><p>Rich in probiotics and vitamins A, B, and C. Supports gut health, which directly improves skin clarity.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🫘</div><div><strong>Soybean Paste 된장</strong><p>Fermented soybeans contain isoflavones that boost collagen production and have antioxidant properties.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🍚</div><div><strong>Rice Water 쌀뜨물</strong><p>Used both as a drink and skin rinse. Contains vitamins B and E, minerals that brighten and soften skin.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🍵</div><div><strong>Barley Tea 보리차</strong><p>Caffeine-free hydration packed with antioxidants. Koreans drink this daily as a water substitute.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🥒</div><div><strong>Seaweed 미역</strong><p>Packed with omega-3, vitamins, and minerals. Seaweed soup is a Korean staple known for skin regeneration.</p></div></div>
+                        <div class="ingredient-item"><div class="ingredient-icon">🍯</div><div><strong>Honey 꿀</strong><p>Natural humectant with antibacterial properties. Korean traditional medicine uses it for wound healing and skin hydration.</p></div></div>
+                    </div>
                 </div>
 
-                <!-- Workout Routines - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "운동 루틴 추천 기능 만들어줘. 홈트 위주로 하고,
-                    목표(다이어트/근육/체력)에 맞는 운동 영상이나 가이드 보여줘."
-                    필요: 운동 데이터베이스, 유튜브 API 연동
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">💪</div>
-                    <h3>Workout Routines</h3>
-                    <p class="feature-korean">운동 루틴</p>
-                    <p class="feature-desc">Home workout routines tailored to your fitness goals - no gym required.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Sleep & Skin -->
+                <div class="content-card">
+                    <h3>Sleep, Stress & Skin</h3>
+                    <p class="content-subtitle">수면, 스트레스 & 피부</p>
+                    <p class="content-text">Your skin repairs and regenerates while you sleep. Poor sleep and chronic stress are among the biggest hidden causes of skin problems. Here is what the science says:</p>
+                    <div class="tip-list">
+                        <div class="tip-item"><strong>7-9 hours of sleep is essential.</strong> During deep sleep, your body increases blood flow to the skin, rebuilds collagen, and repairs UV damage. Less than 6 hours leads to dull skin, dark circles, and faster aging.</div>
+                        <div class="tip-item"><strong>Stress triggers cortisol.</strong> High cortisol levels increase oil production, leading to breakouts. It also breaks down collagen, causing premature wrinkles and saggy skin.</div>
+                        <div class="tip-item"><strong>Night skincare is crucial.</strong> Apply your heaviest treatments (retinol, sleeping masks, rich creams) at night when skin absorption is highest and there is no UV exposure.</div>
+                        <div class="tip-item"><strong>Sleep position matters.</strong> Sleeping face-down presses your skin against the pillow, causing wrinkles over time. Try sleeping on your back or use a silk pillowcase.</div>
+                        <div class="tip-item"><strong>Manage stress holistically.</strong> Korean wellness culture emphasizes balance: jjimjilbang (Korean sauna), forest bathing, tea ceremonies, and regular skincare routines all reduce stress while benefiting skin.</div>
+                    </div>
                 </div>
 
-                <!-- Sleep & Stress - PLACEHOLDER -->
-                <!--
-                    🔧 개발 명령어: "수면/스트레스 관리 기능 만들어줘. 수면 시간 기록하고,
-                    피부 컨디션이랑 연관성 보여줘. 스트레스 줄이는 팁도 제공해줘."
-                    필요: 데이터 저장 (로컬/Firebase), 차트 라이브러리
-                -->
-                <div class="feature-card placeholder-card">
-                    <div class="feature-icon">😴</div>
-                    <h3>Sleep & Stress Tracker</h3>
-                    <p class="feature-korean">수면 & 스트레스</p>
-                    <p class="feature-desc">Track your sleep and stress levels to see how they affect your skin.</p>
-                    <div class="coming-badge">Coming Soon</div>
+                <!-- Daily Habits -->
+                <div class="content-card">
+                    <h3>Daily Habits for Better Skin</h3>
+                    <p class="content-subtitle">좋은 피부를 위한 일상 습관</p>
+                    <div class="tip-list">
+                        <div class="tip-item"><strong>Drink 2L of water daily.</strong> Hydration starts from within. Korean celebrities credit their glass skin to drinking plenty of water throughout the day.</div>
+                        <div class="tip-item"><strong>Never skip sunscreen.</strong> UV damage is the number one cause of premature aging. Apply SPF 50+ every morning, even on cloudy days and indoors near windows.</div>
+                        <div class="tip-item"><strong>Do not touch your face.</strong> Your hands carry bacteria that can cause breakouts. Avoid resting your chin on your hands or picking at blemishes.</div>
+                        <div class="tip-item"><strong>Change your pillowcase weekly.</strong> Oil, bacteria, and dead skin cells accumulate on pillowcases. Switch to silk or satin for less friction on your skin.</div>
+                        <div class="tip-item"><strong>Exercise regularly.</strong> Physical activity increases blood circulation, delivering oxygen and nutrients to skin cells. Even a 30-minute walk improves skin health.</div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -302,7 +336,21 @@
         <!-- Footer -->
         <footer class="footer">
             <p>Made with 💖 for K-Beauty lovers worldwide</p>
+            <div class="footer-links">
+                <a href="#" onclick="openPage('about'); return false;">About</a>
+                <a href="#" onclick="openPage('contact'); return false;">Contact</a>
+                <a href="#" onclick="openPage('privacy'); return false;">Privacy Policy</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 K-Beauty Guide. All rights reserved.</p>
         </footer>
+    </div>
+
+    <!-- Page Modals -->
+    <div id="page-modal" class="page-modal hidden">
+        <div class="page-modal-content">
+            <button class="page-modal-close" onclick="closePage()">&times;</button>
+            <div id="page-modal-body"></div>
+        </div>
     </div>
 
     <script>
@@ -1301,6 +1349,74 @@ function switchSubTab(tabId, e) {
         e.target.classList.add('active');
     }
     document.getElementById(tabId).classList.remove('hidden');
+}
+
+// Page Modal (About, Contact, Privacy)
+var pageContent = {
+    about: '<h2>About K-Beauty Guide</h2>' +
+        '<p class="page-subtitle">K-뷰티 가이드 소개</p>' +
+        '<p>K-Beauty Guide is a free educational resource designed to help beginners navigate the world of Korean skincare and beauty. Whether you are exploring K-Beauty for the first time or planning a trip to Seoul for aesthetic treatments, our goal is to provide clear, accurate, and helpful information in both English and Korean.</p>' +
+        '<h3>What We Offer</h3>' +
+        '<ul>' +
+        '<li><strong>Skin Type Quiz</strong> — An interactive quiz that analyzes your skin characteristics across different seasons to determine your skin type (dry, oily, combination, sensitive, or normal) with personalized K-Beauty product recommendations.</li>' +
+        '<li><strong>Personal Color Test</strong> — A diagnostic tool that identifies your seasonal color type (Spring Warm, Summer Cool, Fall Warm, or Winter Cool) and provides your best color palette, styling tips, and makeup shade recommendations.</li>' +
+        '<li><strong>Clinic Directory</strong> — A curated list of reputable dermatology clinics in the Gangnam, Sinsa, and Cheongdam areas of Seoul, including specialties, price ranges, ratings, and direct links to Google Maps and Naver Maps.</li>' +
+        '<li><strong>Procedure Guide</strong> — Detailed information on the 10 most popular aesthetic procedures in Korea, including Botox, fillers, laser toning, and more, with pricing in both KRW and USD.</li>' +
+        '<li><strong>Product Education</strong> — Comprehensive guides to the Korean 10-step skincare routine, popular ingredients, and beginner tips to help you build an effective routine.</li>' +
+        '<li><strong>Wellness Content</strong> — Evidence-based information on how diet, sleep, stress, and daily habits affect skin health, featuring traditional Korean superfoods and wellness practices.</li>' +
+        '</ul>' +
+        '<h3>Our Mission</h3>' +
+        '<p>We believe that skincare knowledge should be accessible to everyone. Korean beauty has transformed the global skincare industry with its innovation, affordability, and focus on prevention over correction. K-Beauty Guide bridges the language and knowledge gap so that anyone, regardless of background, can benefit from Korean beauty wisdom.</p>' +
+        '<h3>Disclaimer</h3>' +
+        '<p>The content on this site is for educational and informational purposes only. It is not intended as medical advice. Always consult a licensed dermatologist or healthcare professional before starting any new skincare treatment or aesthetic procedure. Individual results may vary based on skin type, health conditions, and other factors.</p>',
+
+    contact: '<h2>Contact Us</h2>' +
+        '<p class="page-subtitle">문의하기</p>' +
+        '<p>We value your feedback and are always looking to improve K-Beauty Guide. If you have questions, suggestions, corrections, or partnership inquiries, please reach out to us through the following channels:</p>' +
+        '<div class="contact-info">' +
+        '<div class="contact-item"><strong>Email</strong><p>support@kbeautyguide.com</p></div>' +
+        '<div class="contact-item"><strong>Response Time</strong><p>We typically respond within 48 hours during business days.</p></div>' +
+        '</div>' +
+        '<h3>Feedback</h3>' +
+        '<p>Found incorrect information? Have a suggestion for a new feature? We appreciate all feedback that helps us serve the K-Beauty community better. Please include as much detail as possible in your message so we can address your inquiry effectively.</p>' +
+        '<h3>Content Corrections</h3>' +
+        '<p>We strive for accuracy in all our content, including clinic information, procedure details, and product recommendations. If you notice any outdated or incorrect information, please let us know and we will update it promptly.</p>',
+
+    privacy: '<h2>Privacy Policy</h2>' +
+        '<p class="page-subtitle">개인정보처리방침</p>' +
+        '<p><strong>Last updated:</strong> February 2026</p>' +
+        '<p>K-Beauty Guide ("we," "our," or "us") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.</p>' +
+        '<h3>1. Information We Collect</h3>' +
+        '<p><strong>Quiz and Test Data:</strong> When you take our Skin Type Quiz or Personal Color Test, your answers are processed locally in your browser to generate results. We do not store your quiz responses on any server. All quiz data remains on your device and is cleared when you close or refresh the page.</p>' +
+        '<p><strong>Automatically Collected Data:</strong> Like most websites, we may collect certain information automatically, including your IP address, browser type, device type, operating system, referring URLs, and pages visited. This data is collected through cookies and similar technologies for analytics purposes.</p>' +
+        '<h3>2. How We Use Your Information</h3>' +
+        '<p>We use collected information to: (a) provide and improve our services; (b) analyze website traffic and usage patterns; (c) display relevant advertisements through Google AdSense; and (d) ensure the security and functionality of our website.</p>' +
+        '<h3>3. Google AdSense and Cookies</h3>' +
+        '<p>We use Google AdSense to display advertisements on our website. Google AdSense uses cookies to serve ads based on your prior visits to our website and other websites on the Internet. Google\'s use of advertising cookies enables it and its partners to serve ads based on your visit to our site and other sites on the Internet. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a>.</p>' +
+        '<p>Third-party vendors, including Google, use cookies to serve ads based on your prior visits. You can opt out of third-party vendor cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">www.aboutads.info</a>.</p>' +
+        '<h3>4. Third-Party Links</h3>' +
+        '<p>Our website contains links to external websites including Google Maps, Naver Maps, and clinic websites. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.</p>' +
+        '<h3>5. Data Security</h3>' +
+        '<p>We implement appropriate technical and organizational measures to protect your personal data. However, no method of transmission over the Internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>' +
+        '<h3>6. Children\'s Privacy</h3>' +
+        '<p>Our website is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.</p>' +
+        '<h3>7. Your Rights</h3>' +
+        '<p>Depending on your location, you may have the right to: (a) access the personal data we hold about you; (b) request correction or deletion of your data; (c) object to or restrict processing of your data; and (d) data portability. To exercise any of these rights, please contact us at the email address provided on our Contact page.</p>' +
+        '<h3>8. Changes to This Policy</h3>' +
+        '<p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page with an updated revision date. Your continued use of the website after any changes constitutes acceptance of the updated policy.</p>' +
+        '<h3>9. Contact Us</h3>' +
+        '<p>If you have questions about this Privacy Policy or our data practices, please contact us at support@kbeautyguide.com.</p>'
+};
+
+function openPage(page) {
+    document.getElementById('page-modal-body').innerHTML = pageContent[page];
+    document.getElementById('page-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePage() {
+    document.getElementById('page-modal').classList.add('hidden');
+    document.body.style.overflow = '';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
