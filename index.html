@@ -16,9 +16,11 @@
 
         <!-- Tab Navigation -->
         <nav class="tab-nav">
-            <button class="tab-btn active" data-tab="quiz">Skin Quiz</button>
-            <button class="tab-btn" data-tab="procedures">Procedures</button>
-            <button class="tab-btn" data-tab="scanner">Scanner</button>
+            <button class="tab-btn active" data-tab="quiz">Quiz</button>
+            <button class="tab-btn" data-tab="products">Products</button>
+            <button class="tab-btn" data-tab="procedures">Clinics</button>
+            <button class="tab-btn" data-tab="ai">AI Beauty</button>
+            <button class="tab-btn" data-tab="wellness">Wellness</button>
         </nav>
 
         <!-- Tab Contents -->
@@ -85,35 +87,193 @@
                 <div class="procedures-grid" id="procedures-grid"></div>
             </section>
 
-            <!-- Scanner Tab -->
-            <section id="scanner" class="tab-panel hidden">
-                <div class="scanner-blur-container">
-                    <div class="scanner-preview blurred">
-                        <div class="scanner-icon">📷</div>
-                        <h2>Product Scanner</h2>
-                        <h3>제품 스캐너</h3>
-                        <div class="fake-scanner-ui">
-                            <div class="scan-frame"></div>
-                            <p>Point camera at product barcode</p>
-                        </div>
-                        <ul class="feature-list">
-                            <li>🔍 Scan product barcodes for ingredient analysis</li>
-                            <li>📊 Get safety ratings and reviews</li>
-                            <li>💡 Find similar products at better prices</li>
-                            <li>🌿 Check for harmful ingredients</li>
-                            <li>🇰🇷 Korean product translations</li>
-                        </ul>
-                    </div>
-                    <div class="coming-soon-popup">
-                        <div class="popup-content">
-                            <div class="popup-icon">🚀</div>
-                            <h2>Coming Soon!</h2>
-                            <h3>곧 출시됩니다!</h3>
-                            <p>We're working hard to bring you the best product scanner experience.</p>
-                            <p class="korean">최고의 제품 스캐너 경험을 제공하기 위해 열심히 개발 중입니다.</p>
-                            <div class="popup-badge">Stay Tuned! 기대해주세요!</div>
-                        </div>
-                    </div>
+            <!-- Products Tab -->
+            <section id="products" class="tab-panel hidden">
+                <h2 class="section-title">Product Finder</h2>
+                <p class="section-subtitle">내 피부에 맞는 제품 찾기</p>
+
+                <!-- Product Scanner - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "바코드 스캐너 기능 개발해줘. 카메라로 바코드 스캔하면 제품 성분 분석해서 보여주고,
+                    내 피부타입에 맞는지 판단해줘. Open Food Facts API나 화해 앱 같은 성분 DB 연동 필요."
+                    필요: 카메라 API, 바코드 인식 라이브러리(QuaggaJS), 성분 DB API
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">📷</div>
+                    <h3>Ingredient Scanner</h3>
+                    <p class="feature-korean">성분 스캐너</p>
+                    <p class="feature-desc">Scan any K-beauty product to analyze ingredients and check if it's right for your skin.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Product Recommendations -->
+                <!--
+                    🔧 개발 명령어: "피부타입별 제품 추천 기능 만들어줘. 퀴즈 결과 기반으로 추천하고,
+                    각 제품에 쿠팡 파트너스 링크 연결해줘. 쿠팡 API 키는 [KEY] 야."
+                    필요: 쿠팡 파트너스 가입, 제품 데이터베이스
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">🛍️</div>
+                    <h3>Personalized Picks</h3>
+                    <p class="feature-korean">맞춤 제품 추천</p>
+                    <p class="feature-desc">Get product recommendations based on your skin quiz results. Shop directly with our curated links.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Product Compare -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>Product Compare</h3>
+                    <p class="feature-korean">제품 비교</p>
+                    <p class="feature-desc">Compare ingredients and prices across similar products to find the best match.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+            </section>
+
+            <!-- Procedures/Clinics Tab -->
+            <section id="procedures" class="tab-panel hidden">
+                <h2 class="section-title">K-Beauty Procedures</h2>
+                <p class="section-subtitle">한국 피부과 인기 시술</p>
+
+                <!-- Clinic Finder - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "한국 피부과/성형외과 검색 기능 만들어줘. 지역별, 시술별 필터링 되고,
+                    가격 비교랑 리뷰 볼 수 있게. 강남역 기준으로 주변 병원 리스트 보여줘."
+                    필요: 병원 데이터베이스, 카카오맵 API, 리뷰 시스템
+                -->
+                <div class="feature-card placeholder-card" style="margin-bottom: 20px;">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Clinic Finder & Reviews</h3>
+                    <p class="feature-korean">병원 찾기 & 리뷰</p>
+                    <p class="feature-desc">Find clinics near you, compare prices, and read real reviews from patients.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <h3 class="subsection-title">Popular Procedures 인기 시술</h3>
+                <div class="procedures-grid" id="procedures-grid"></div>
+            </section>
+
+            <!-- AI Beauty Tab -->
+            <section id="ai" class="tab-panel hidden">
+                <h2 class="section-title">AI Beauty Analysis</h2>
+                <p class="section-subtitle">AI 뷰티 분석</p>
+
+                <!-- Face Analysis - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "AI 얼굴 분석 기능 만들어줘. 셀카 찍으면 얼굴형, 이목구비 비율 분석하고
+                    퍼스널컬러 진단해줘. 어울리는 메이크업, 헤어스타일도 추천해줘."
+                    필요: Face API (Azure/AWS), 얼굴 분석 모델, 이미지 업로드
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">🪞</div>
+                    <h3>Face Shape Analysis</h3>
+                    <p class="feature-korean">얼굴형 분석</p>
+                    <p class="feature-desc">Upload a selfie to discover your face shape and get personalized makeup & hairstyle tips.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Personal Color - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "퍼스널컬러 진단 기능 만들어줘. 사진 올리면 피부톤 분석해서
+                    봄웜/여름쿨/가을웜/겨울쿨 알려주고 어울리는 컬러 팔레트 보여줘."
+                    필요: 컬러 분석 알고리즘, 피부톤 감지
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Personal Color Test</h3>
+                    <p class="feature-korean">퍼스널컬러 진단</p>
+                    <p class="feature-desc">Find out if you're Spring, Summer, Fall, or Winter and discover your best colors.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Surgery Simulation - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "성형 시뮬레이션 기능 만들어줘. 내 사진으로 쌍커풀, 코, 턱 등
+                    성형 후 모습 미리볼 수 있게. 슬라이더로 정도 조절 가능하게."
+                    필요: 얼굴 랜드마크 감지, 이미지 변형 라이브러리, Face Mesh
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Surgery Simulator</h3>
+                    <p class="feature-korean">성형 시뮬레이션</p>
+                    <p class="feature-desc">Preview potential results for double eyelids, nose, jawline and more on your own photo.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Fortune/Face Reading - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "AI 관상 보는 기능 만들어줘. 재미로 보는 관상 분석이고,
+                    얼굴 특징 기반으로 성격, 운세 등 알려줘. 너무 심각하지 않게 재미 위주로."
+                    필요: 얼굴 특징 분석, 관상 데이터베이스
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">🔮</div>
+                    <h3>AI Face Reading</h3>
+                    <p class="feature-korean">AI 관상</p>
+                    <p class="feature-desc">Just for fun! Get a lighthearted face reading based on your facial features.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+            </section>
+
+            <!-- Wellness Tab -->
+            <section id="wellness" class="tab-panel hidden">
+                <h2 class="section-title">Wellness & Lifestyle</h2>
+                <p class="section-subtitle">웰니스 & 라이프스타일</p>
+
+                <!-- Diet Planner - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "다이어트 식단 플래너 만들어줘. 목표 체중, 현재 체중 입력하면
+                    일일 칼로리 계산하고 한국 음식 위주로 식단 추천해줘."
+                    필요: 칼로리 계산 로직, 한국 음식 데이터베이스
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">🥗</div>
+                    <h3>Diet Planner</h3>
+                    <p class="feature-korean">식단 플래너</p>
+                    <p class="feature-desc">Get personalized meal plans with Korean foods to reach your health goals.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Workout Routines - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "운동 루틴 추천 기능 만들어줘. 홈트 위주로 하고,
+                    목표(다이어트/근육/체력)에 맞는 운동 영상이나 가이드 보여줘."
+                    필요: 운동 데이터베이스, 유튜브 API 연동
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">💪</div>
+                    <h3>Workout Routines</h3>
+                    <p class="feature-korean">운동 루틴</p>
+                    <p class="feature-desc">Home workout routines tailored to your fitness goals - no gym required.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Skin-Diet Connection - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "피부와 식단 연결해서, 피부 고민별로 먹으면 좋은 음식,
+                    피해야 할 음식 알려주는 기능 만들어줘. 여드름엔 이거 피해라 이런 식으로."
+                    필요: 피부-영양 데이터베이스
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">🍎</div>
+                    <h3>Skin-Food Guide</h3>
+                    <p class="feature-korean">피부를 위한 음식</p>
+                    <p class="feature-desc">Learn which foods help or hurt your specific skin concerns.</p>
+                    <div class="coming-badge">Coming Soon</div>
+                </div>
+
+                <!-- Sleep & Stress - PLACEHOLDER -->
+                <!--
+                    🔧 개발 명령어: "수면/스트레스 관리 기능 만들어줘. 수면 시간 기록하고,
+                    피부 컨디션이랑 연관성 보여줘. 스트레스 줄이는 팁도 제공해줘."
+                    필요: 데이터 저장 (로컬/Firebase), 차트 라이브러리
+                -->
+                <div class="feature-card placeholder-card">
+                    <div class="feature-icon">😴</div>
+                    <h3>Sleep & Stress Tracker</h3>
+                    <p class="feature-korean">수면 & 스트레스</p>
+                    <p class="feature-desc">Track your sleep and stress levels to see how they affect your skin.</p>
+                    <div class="coming-badge">Coming Soon</div>
                 </div>
             </section>
         </main>
