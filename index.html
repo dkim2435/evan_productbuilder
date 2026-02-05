@@ -558,7 +558,8 @@ var clinicsData = [
         popular: "Botox, Rejuran",
         lat: 37.4979,
         lng: 127.0276,
-        naverPlaceId: "1100410036"
+        naverPlaceId: "1100410036",
+        englishOk: true
     },
     {
         name: "April31 Plastic Surgery",
@@ -572,7 +573,8 @@ var clinicsData = [
         popular: "Filler, Ulthera, Thread Lift",
         lat: 37.5045,
         lng: 127.0254,
-        naverPlaceId: "38453063"
+        naverPlaceId: "38453063",
+        englishOk: true
     },
     {
         name: "Renewme Skin Clinic",
@@ -586,7 +588,8 @@ var clinicsData = [
         popular: "Laser Toning, Skin Booster",
         lat: 37.4968,
         lng: 127.0284,
-        naverPlaceId: "1224498562"
+        naverPlaceId: "1224498562",
+        englishOk: false
     },
     {
         name: "Seran Dermatology",
@@ -600,7 +603,8 @@ var clinicsData = [
         popular: "Premium Botox, Rejuran",
         lat: 37.5200,
         lng: 127.0474,
-        naverPlaceId: "1855076137"
+        naverPlaceId: "1855076137",
+        englishOk: true
     },
     {
         name: "Made Young Clinic",
@@ -614,7 +618,83 @@ var clinicsData = [
         popular: "Affordable Laser, Aqua Peel",
         lat: 37.4982,
         lng: 127.0287,
-        naverPlaceId: "1102752374"
+        naverPlaceId: "1102752374",
+        englishOk: false
+    },
+    {
+        name: "Hus-hu Dermatology",
+        korean: "허스허피부과",
+        area: "Sinsa",
+        areaKr: "신사",
+        rating: 4.7,
+        reviews: 289,
+        specialties: ["laser", "skinbooster", "pico", "aquapeel"],
+        priceRange: "₩₩",
+        popular: "Laser Toning, Skin Booster",
+        lat: 37.5160,
+        lng: 127.0200,
+        naverPlaceId: "1583928504",
+        englishOk: true
+    },
+    {
+        name: "Banobagi Plastic Surgery",
+        korean: "바노바기성형외과",
+        area: "Gangnam",
+        areaKr: "강남",
+        rating: 4.6,
+        reviews: 743,
+        specialties: ["botox", "filler", "lifting", "thread"],
+        priceRange: "₩₩₩",
+        popular: "Botox, Filler, Thread Lift",
+        lat: 37.5010,
+        lng: 127.0396,
+        naverPlaceId: "11592061",
+        englishOk: true
+    },
+    {
+        name: "Dermaline",
+        korean: "더마라인피부과",
+        area: "Gangnam",
+        areaKr: "강남",
+        rating: 4.8,
+        reviews: 412,
+        specialties: ["laser", "pico", "skinbooster", "botox"],
+        priceRange: "₩₩",
+        popular: "Pico Laser, Skin Booster",
+        lat: 37.4985,
+        lng: 127.0305,
+        naverPlaceId: "1178498498",
+        englishOk: true
+    },
+    {
+        name: "Cheongdam Star Clinic",
+        korean: "청담스타의원",
+        area: "Cheongdam",
+        areaKr: "청담",
+        rating: 4.7,
+        reviews: 198,
+        specialties: ["botox", "filler", "lifting", "skinbooster"],
+        priceRange: "₩₩₩",
+        popular: "Premium Botox, Lifting",
+        lat: 37.5215,
+        lng: 127.0480,
+        naverPlaceId: "1100252105",
+        englishOk: true
+    },
+    {
+        name: "Yonsei Star Dermatology",
+        korean: "연세스타피부과",
+        area: "Sinsa",
+        areaKr: "신사",
+        rating: 4.6,
+        reviews: 267,
+        specialties: ["laser", "pico", "skinbooster", "aquapeel"],
+        priceRange: "₩₩",
+        popular: "Pico Laser, Aqua Peel",
+        lat: 37.5165,
+        lng: 127.0210,
+        naverPlaceId: "1947483245",
+        englishOk: true
     }
 ];
 
@@ -857,13 +937,16 @@ function renderClinics(filter) {
         var googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(c.korean + ' ' + c.areaKr);
         var naverMapUrl = 'https://map.naver.com/p/search/' + encodeURIComponent(c.korean);
 
+        var naverReviewUrl = 'https://m.place.naver.com/hospital/' + c.naverPlaceId + '/review';
+        var englishBadge = c.englishOk ? '<span class="english-badge">EN</span>' : '';
+
         html += '<div class="clinic-card">' +
                 '<div class="clinic-header">' +
-                '<div class="clinic-name">' + c.name + '</div>' +
+                '<div class="clinic-name">' + c.name + englishBadge + '</div>' +
                 '<div class="clinic-name-kr">' + c.korean + '</div>' +
                 '</div>' +
                 '<div class="clinic-location">📍 ' + c.area + ' ' + c.areaKr + '</div>' +
-                '<div class="clinic-rating"><span class="stars">' + stars + '</span> ' + c.rating + ' <span class="review-count">(' + c.reviews + ' reviews)</span></div>' +
+                '<div class="clinic-rating"><span class="stars">' + stars + '</span> ' + c.rating + ' <a href="' + naverReviewUrl + '" target="_blank" class="review-link" onclick="event.stopPropagation()">(' + c.reviews + ' reviews)</a></div>' +
                 '<div class="clinic-popular">✨ ' + c.popular + '</div>' +
                 '<div class="clinic-price">' + c.priceRange + '</div>' +
                 '<div class="clinic-maps">' +

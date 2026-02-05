@@ -740,6 +740,31 @@ body {
     font-size: 0.75rem;
 }
 
+.clinic-rating .review-link {
+    color: #667eea;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.clinic-rating .review-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.english-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+}
+
 .clinic-popular {
     font-size: 0.8rem;
     color: #555;
