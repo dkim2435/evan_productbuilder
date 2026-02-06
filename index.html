@@ -119,7 +119,7 @@
                     <h3 class="analyzer-title">Ingredient Analyzer</h3>
                     <p class="analyzer-title-kr">성분 분석기</p>
                     <p class="analyzer-desc">Paste any product's ingredient list to get an instant breakdown of what's inside.</p>
-                    <textarea id="analyzer-input" class="analyzer-textarea" placeholder="Paste ingredient list here… e.g. Water, Glycerin, Niacinamide, …" rows="4"></textarea>
+                    <textarea id="analyzer-input" class="analyzer-textarea" placeholder="Paste ingredient list here… e.g. Water, Glycerin, Niacinamide, 나이아신아마이드, 레티놀, …" rows="4"></textarea>
                     <div class="analyzer-buttons">
                         <button class="primary-btn analyzer-btn" onclick="analyzeIngredients()">Analyze 분석하기</button>
                         <button class="secondary-btn analyzer-clear-btn" onclick="clearAnalyzer()">Clear</button>
@@ -1103,8 +1103,12 @@ var INGREDIENT_ALIASES = {
 
 // Build a lowercase lookup map from INGREDIENT_DB for fast exact matching
 var _ingredientMap = {};
+var _ingredientMapKr = {};
 INGREDIENT_DB.forEach(function(entry) {
     _ingredientMap[entry.name.toLowerCase()] = entry;
+    if (entry.nameKr) {
+        _ingredientMapKr[entry.nameKr.toLowerCase()] = entry;
+    }
 });
 
 function lookupIngredient(rawName) {
@@ -1120,9 +1124,14 @@ function lookupIngredient(rawName) {
         if (entry) return { found: true, data: entry };
     }
 
-    // Tier 2: Exact name match
+    // Tier 2: Exact name match (English)
     if (_ingredientMap[lower]) {
         return { found: true, data: _ingredientMap[lower] };
+    }
+
+    // Tier 2.5: Exact Korean name match
+    if (_ingredientMapKr[lower]) {
+        return { found: true, data: _ingredientMapKr[lower] };
     }
 
     // Tier 3: Substring match (DB name contained in query, or query contained in DB name)
@@ -1130,6 +1139,13 @@ function lookupIngredient(rawName) {
         var dbLower = INGREDIENT_DB[i].name.toLowerCase();
         if (lower.indexOf(dbLower) !== -1 || dbLower.indexOf(lower) !== -1) {
             return { found: true, data: INGREDIENT_DB[i] };
+        }
+        // Also check Korean name substring match
+        if (INGREDIENT_DB[i].nameKr) {
+            var krLower = INGREDIENT_DB[i].nameKr.toLowerCase();
+            if (lower.indexOf(krLower) !== -1 || krLower.indexOf(lower) !== -1) {
+                return { found: true, data: INGREDIENT_DB[i] };
+            }
         }
     }
 
