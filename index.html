@@ -545,19 +545,6 @@
                     </div>
                 </div>
 
-                <!-- Skin Tone & Makeup Guide -->
-                <div class="content-card" onclick="toggleContent(this)">
-                    <div class="content-card-header"><div><h3>Color Theory & Makeup</h3><p class="content-subtitle">컬러 이론 & 메이크업</p></div><span class="content-chevron">&#9660;</span></div>
-                    <div class="content-card-body">
-                        <p class="content-text">Your personal color season affects which makeup shades look most natural and flattering on you. Here is a quick guide for each season:</p>
-                        <div class="makeup-guide">
-                            <div class="makeup-season"><strong>Spring Warm 봄 웜</strong><p>Foundation: Warm beige. Lip: Coral, peach. Blush: Apricot. Eye: Warm brown, gold shimmer.</p></div>
-                            <div class="makeup-season"><strong>Summer Cool 여름 쿨</strong><p>Foundation: Pink beige. Lip: Rose pink, mauve. Blush: Soft pink. Eye: Taupe, lavender.</p></div>
-                            <div class="makeup-season"><strong>Fall Warm 가을 웜</strong><p>Foundation: Golden beige. Lip: Brick red, terracotta. Blush: Peach brown. Eye: Copper, olive.</p></div>
-                            <div class="makeup-season"><strong>Winter Cool 겨울 쿨</strong><p>Foundation: Neutral to cool. Lip: Berry, wine, true red. Blush: Cool pink. Eye: Charcoal, plum.</p></div>
-                        </div>
-                    </div>
-                </div>
             </section>
 
             <!-- Wellness Tab -->
@@ -1552,7 +1539,8 @@ var personalColorResults = {
             "Avoid heavy, dark makeup — keep it fresh",
             "Warm brown and caramel hair tones are ideal"
         ],
-        celebs: ["Yoona (SNSD)", "Suzy (Miss A)"]
+        celebs: ["Yoona (SNSD)", "Suzy (Miss A)"],
+        makeup: { foundation: "Warm beige", lip: "Coral, peach", blush: "Apricot", eye: "Warm brown, gold shimmer" }
     },
     summer: {
         emoji: "🌊",
@@ -1580,7 +1568,8 @@ var personalColorResults = {
             "Ash or cool brown hair tones are flattering",
             "Avoid overly warm or earthy makeup shades"
         ],
-        celebs: ["IU", "Kim Taehee"]
+        celebs: ["IU", "Kim Taehee"],
+        makeup: { foundation: "Pink beige", lip: "Rose pink, mauve", blush: "Soft pink", eye: "Taupe, lavender" }
     },
     fall: {
         emoji: "🍂",
@@ -1608,7 +1597,8 @@ var personalColorResults = {
             "Deep auburn or chestnut hair tones suit you",
             "Layer warm neutrals for a polished look"
         ],
-        celebs: ["Jennie (BLACKPINK)", "Song Hyekyo"]
+        celebs: ["Jennie (BLACKPINK)", "Song Hyekyo"],
+        makeup: { foundation: "Golden beige", lip: "Brick red, terracotta", blush: "Peach brown", eye: "Copper, olive" }
     },
     winter: {
         emoji: "❄️",
@@ -1636,7 +1626,8 @@ var personalColorResults = {
             "Cool black or blue-black hair is most flattering",
             "Don't be afraid of pure white and jet black"
         ],
-        celebs: ["Jisoo (BLACKPINK)", "Jun Jihyun"]
+        celebs: ["Jisoo (BLACKPINK)", "Jun Jihyun"],
+        makeup: { foundation: "Neutral to cool", lip: "Berry, wine, true red", blush: "Cool pink", eye: "Charcoal, plum" }
     }
 };
 
@@ -1946,6 +1937,13 @@ function showPCResult() {
     }
     celebsHtml += '</div>';
 
+    var makeupHtml = '<div class="makeup-guide"><h4>Makeup Guide 메이크업 가이드</h4>' +
+        '<div class="makeup-season"><strong>Foundation 파운데이션</strong><p>' + r.makeup.foundation + '</p></div>' +
+        '<div class="makeup-season"><strong>Lip 립</strong><p>' + r.makeup.lip + '</p></div>' +
+        '<div class="makeup-season"><strong>Blush 블러셔</strong><p>' + r.makeup.blush + '</p></div>' +
+        '<div class="makeup-season"><strong>Eye Shadow 아이섀도</strong><p>' + r.makeup.eye + '</p></div>' +
+        '</div>';
+
     var seasonColors = { spring: '#FF7F50', summer: '#B0E0E6', fall: '#E2725B', winter: '#4169E1' };
 
     document.getElementById('pc-result-content').innerHTML =
@@ -1957,6 +1955,7 @@ function showPCResult() {
         '<h4>Best Colors 베스트 컬러</h4>' + bestColorsHtml +
         worstColorsHtml +
         '<h4>Styling Tips</h4><ul>' + tipsHtml + '</ul>' +
+        makeupHtml +
         celebsHtml +
         '</div>' +
         '<button class="secondary-btn" onclick="retakePersonalColor()">Retake Test 다시하기</button>';
