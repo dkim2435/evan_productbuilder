@@ -33,6 +33,11 @@
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7280155441452276"
      crossorigin="anonymous"></script>
+    <script type="module">
+        import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/vision_bundle.mjs";
+        window.FaceLandmarker = FaceLandmarker;
+        window.FilesetResolver = FilesetResolver;
+    </script>
 </head>
 <body>
     <div class="app-container">
@@ -406,19 +411,54 @@
                 <h2 class="section-title">AI Beauty Analysis</h2>
                 <p class="section-subtitle">AI 뷰티 분석</p>
 
-                <!-- Face Shape Guide -->
-                <div class="content-card" onclick="toggleContent(this)">
-                    <div class="content-card-header"><div><h3>Face Shape Guide</h3><p class="content-subtitle">얼굴형 가이드</p></div><span class="content-chevron">&#9660;</span></div>
-                    <div class="content-card-body">
-                        <p class="content-text">Understanding your face shape helps you choose the most flattering hairstyles, glasses, and makeup contouring techniques. Here are the most common face shapes:</p>
-                        <div class="face-shape-grid">
-                            <div class="face-shape-item"><span class="face-shape-icon">🥚</span><div><strong>Oval 타원형</strong><p>Balanced proportions, slightly wider at cheekbones. Considered the most versatile shape — most styles work well.</p></div></div>
-                            <div class="face-shape-item"><span class="face-shape-icon">🟢</span><div><strong>Round 둥근형</strong><p>Equal width and length with soft angles. Add angles with contouring and try layered or side-parted hairstyles.</p></div></div>
-                            <div class="face-shape-item"><span class="face-shape-icon">🔷</span><div><strong>Square 사각형</strong><p>Strong jawline with equal width at forehead, cheeks, and jaw. Soften angles with wavy hair and round earrings.</p></div></div>
-                            <div class="face-shape-item"><span class="face-shape-icon">💎</span><div><strong>Diamond 다이아몬드형</strong><p>Narrow forehead and jaw, widest at cheekbones. Highlight your cheekbones and try side-swept bangs.</p></div></div>
-                            <div class="face-shape-item"><span class="face-shape-icon">💗</span><div><strong>Heart 하트형</strong><p>Wide forehead tapering to a narrow chin. Balance with chin-length bobs and soft, wispy bangs.</p></div></div>
-                            <div class="face-shape-item"><span class="face-shape-icon">📏</span><div><strong>Long 긴형</strong><p>Longer than wide with a long forehead or chin. Add width with side-parted styles and horizontal layers.</p></div></div>
+                <!-- Face Shape Detector -->
+                <div id="fs-section">
+                    <!-- Screen 1: Start -->
+                    <div id="fs-start" class="fs-screen">
+                        <div class="pc-start-card">
+                            <div class="quiz-icon">📐</div>
+                            <h2>AI Face Shape Detector</h2>
+                            <h3>AI 얼굴형 분석</h3>
+                            <p>Take a photo or upload an image to discover your face shape and get personalized styling tips!</p>
+                            <p class="korean">사진을 촬영하거나 이미지를 업로드하여 얼굴형을 분석하고 맞춤 스타일링 팁을 받아보세요!</p>
+                            <div class="fs-btn-group">
+                                <button class="primary-btn" onclick="startFaceCamera()">📸 Take Photo 촬영</button>
+                                <button class="secondary-btn" onclick="triggerFaceUpload()">🖼️ Upload Image 업로드</button>
+                                <input type="file" id="fs-file-input" accept="image/*" style="display:none" onchange="handleFaceUpload(event)">
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Screen 2: Camera / Preview -->
+                    <div id="fs-camera" class="fs-screen hidden">
+                        <div class="fs-camera-card">
+                            <div class="fs-camera-wrapper">
+                                <video id="fs-video" autoplay playsinline></video>
+                                <canvas id="fs-canvas" style="display:none"></canvas>
+                                <img id="fs-preview" style="display:none" alt="Preview">
+                                <div id="fs-face-guide" class="fs-face-guide">
+                                    <div class="fs-face-oval"></div>
+                                </div>
+                            </div>
+                            <div id="fs-camera-controls" class="fs-controls">
+                                <button class="secondary-btn" onclick="cancelFaceDetection()">← Back 뒤로</button>
+                                <button class="primary-btn" id="fs-capture-btn" onclick="captureFacePhoto()">📸 Capture 촬영</button>
+                            </div>
+                            <div id="fs-preview-controls" class="fs-controls hidden">
+                                <button class="secondary-btn" onclick="retakeFacePhoto()">↩️ Retake 다시</button>
+                                <button class="primary-btn" onclick="analyzeFaceShape()">🔍 Analyze 분석</button>
+                            </div>
+                            <div id="fs-loading" class="fs-loading hidden">
+                                <div class="fs-spinner"></div>
+                                <p>Analyzing your face shape... 얼굴형 분석 중...</p>
+                            </div>
+                            <p id="fs-error" class="fs-error hidden"></p>
+                        </div>
+                    </div>
+
+                    <!-- Screen 3: Result -->
+                    <div id="fs-result" class="fs-screen hidden">
+                        <div id="fs-result-content" class="result-card"></div>
                     </div>
                 </div>
 
@@ -2077,6 +2117,434 @@ function openPage(page) {
 function closePage() {
     document.getElementById('page-modal').classList.add('hidden');
     document.body.style.overflow = '';
+}
+
+// ===== Face Shape Detector =====
+var fsFaceLandmarker = null;
+var fsStream = null;
+var fsIsMirrored = false;
+var fsCapturedImageData = null;
+
+var fsShapeData = {
+    oval: {
+        emoji: '🥚', name: 'Oval', korean: '타원형',
+        description: 'Balanced proportions, slightly wider at cheekbones. Considered the most versatile shape — most styles work well.',
+        tips: [
+            '💇 Hair: Almost any hairstyle works! Try long layers or a classic bob.',
+            '👓 Glasses: Most frame shapes suit you — experiment freely.',
+            '💄 Makeup: Light contouring on cheekbones to enhance your natural balance.',
+            '💎 Accessories: Any earring style works — hoops, studs, or dangles.',
+            '✂️ Bangs: Side-swept or curtain bangs complement your proportions.'
+        ]
+    },
+    round: {
+        emoji: '🟢', name: 'Round', korean: '둥근형',
+        description: 'Equal width and length with soft angles. Your full cheeks give a youthful appearance.',
+        tips: [
+            '💇 Hair: Layered cuts, side parts, and styles with volume on top elongate your face.',
+            '👓 Glasses: Angular or rectangular frames add definition.',
+            '💄 Makeup: Contour along the sides of your face to create more angles.',
+            '💎 Accessories: Long, dangling earrings help elongate visually.',
+            '✂️ Bangs: Side-swept bangs or deep side parts work best. Avoid blunt, straight-across bangs.'
+        ]
+    },
+    square: {
+        emoji: '🔷', name: 'Square', korean: '사각형',
+        description: 'Strong jawline with equal width at forehead, cheeks, and jaw. Your angular features give a bold, striking look.',
+        tips: [
+            '💇 Hair: Soft waves, layered cuts, or side-parted styles soften angular features.',
+            '👓 Glasses: Round or oval frames balance your strong jawline.',
+            '💄 Makeup: Contour jaw corners and highlight the center of your face.',
+            '💎 Accessories: Round earrings and curved necklaces complement your angles.',
+            '✂️ Bangs: Soft, wispy bangs or side-swept styles work great.'
+        ]
+    },
+    diamond: {
+        emoji: '💎', name: 'Diamond', korean: '다이아몬드형',
+        description: 'Narrow forehead and jaw, widest at cheekbones. Your prominent cheekbones are your standout feature.',
+        tips: [
+            '💇 Hair: Side-swept bangs and chin-length cuts balance your wide cheekbones.',
+            '👓 Glasses: Cat-eye or oval frames highlight your cheekbones beautifully.',
+            '💄 Makeup: Highlight forehead and chin, contour under cheekbones for balance.',
+            '💎 Accessories: Small studs or short drop earrings work well.',
+            '✂️ Bangs: Side-swept or curtain bangs add width to your forehead area.'
+        ]
+    },
+    heart: {
+        emoji: '💗', name: 'Heart', korean: '하트형',
+        description: 'Wide forehead tapering to a narrow chin. Your face has a naturally sweet, inverted triangle shape.',
+        tips: [
+            '💇 Hair: Chin-length bobs or styles with volume below the ears balance your shape.',
+            '👓 Glasses: Light, rimless frames or bottom-heavy frames work best.',
+            '💄 Makeup: Contour temples and highlight chin to create balance.',
+            '💎 Accessories: Teardrop or chandelier earrings balance a narrow chin.',
+            '✂️ Bangs: Soft, wispy bangs or curtain bangs minimize a wide forehead.'
+        ]
+    },
+    long: {
+        emoji: '📏', name: 'Long (Oblong)', korean: '긴형',
+        description: 'Longer than wide with a long forehead or chin. Your elegant proportions give a sophisticated look.',
+        tips: [
+            '💇 Hair: Chin-length bobs, side parts, and horizontal layers add width.',
+            '👓 Glasses: Wide, oversized frames or aviators add width to your face.',
+            '💄 Makeup: Apply blush horizontally across cheeks. Contour forehead and chin.',
+            '💎 Accessories: Wide, chunky earrings add the illusion of width.',
+            '✂️ Bangs: Full, straight-across bangs shorten and balance your face beautifully.'
+        ]
+    }
+};
+
+async function initFaceLandmarker() {
+    if (fsFaceLandmarker) return fsFaceLandmarker;
+    var vision = await window.FilesetResolver.forVisionTasks(
+        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm'
+    );
+    fsFaceLandmarker = await window.FaceLandmarker.createFromOptions(vision, {
+        baseOptions: {
+            modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
+            delegate: 'GPU'
+        },
+        runningMode: 'IMAGE',
+        numFaces: 1
+    });
+    return fsFaceLandmarker;
+}
+
+function showFsScreen(screenId) {
+    var screens = document.querySelectorAll('#fs-section .fs-screen');
+    for (var i = 0; i < screens.length; i++) {
+        screens[i].classList.add('hidden');
+    }
+    document.getElementById(screenId).classList.remove('hidden');
+}
+
+function showFsError(msg) {
+    var el = document.getElementById('fs-error');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    setTimeout(function() { el.classList.add('hidden'); }, 5000);
+}
+
+async function startFaceCamera() {
+    showFsScreen('fs-camera');
+    document.getElementById('fs-camera-controls').classList.remove('hidden');
+    document.getElementById('fs-preview-controls').classList.add('hidden');
+    document.getElementById('fs-loading').classList.add('hidden');
+    document.getElementById('fs-error').classList.add('hidden');
+    document.getElementById('fs-face-guide').style.display = '';
+    document.getElementById('fs-preview').style.display = 'none';
+
+    var video = document.getElementById('fs-video');
+    video.style.display = '';
+    fsIsMirrored = true;
+
+    try {
+        fsStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
+        });
+        video.srcObject = fsStream;
+    } catch (e) {
+        stopFsCamera();
+        showFsScreen('fs-start');
+        showFsError('Camera access denied. Please use image upload instead. 카메라 접근이 거부되었습니다. 이미지 업로드를 이용해주세요.');
+        // Show error on start screen too
+        var startCard = document.querySelector('#fs-start .pc-start-card');
+        var existingErr = startCard.querySelector('.fs-error');
+        if (!existingErr) {
+            var errP = document.createElement('p');
+            errP.className = 'fs-error';
+            errP.textContent = 'Camera not available. Please use image upload. 카메라를 사용할 수 없습니다. 이미지 업로드를 이용해주세요.';
+            startCard.appendChild(errP);
+            setTimeout(function() { errP.remove(); }, 5000);
+        }
+    }
+}
+
+function stopFsCamera() {
+    if (fsStream) {
+        var tracks = fsStream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            tracks[i].stop();
+        }
+        fsStream = null;
+    }
+}
+
+function captureFacePhoto() {
+    var video = document.getElementById('fs-video');
+    var canvas = document.getElementById('fs-canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    var ctx = canvas.getContext('2d');
+    if (fsIsMirrored) {
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+    }
+    ctx.drawImage(video, 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    stopFsCamera();
+    var dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+    var preview = document.getElementById('fs-preview');
+    preview.src = dataUrl;
+    preview.style.display = '';
+    video.style.display = 'none';
+    document.getElementById('fs-face-guide').style.display = 'none';
+    document.getElementById('fs-camera-controls').classList.add('hidden');
+    document.getElementById('fs-preview-controls').classList.remove('hidden');
+    fsCapturedImageData = dataUrl;
+}
+
+function triggerFaceUpload() {
+    document.getElementById('fs-file-input').click();
+}
+
+function handleFaceUpload(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+        showFsError('Please upload an image file. 이미지 파일을 업로드해주세요.');
+        return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+        showFsError('File is too large (max 10MB). 파일이 너무 큽니다 (최대 10MB).');
+        return;
+    }
+
+    fsIsMirrored = false;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        fsCapturedImageData = e.target.result;
+        showFsScreen('fs-camera');
+        var preview = document.getElementById('fs-preview');
+        preview.src = fsCapturedImageData;
+        preview.style.display = '';
+        document.getElementById('fs-video').style.display = 'none';
+        document.getElementById('fs-face-guide').style.display = 'none';
+        document.getElementById('fs-camera-controls').classList.add('hidden');
+        document.getElementById('fs-preview-controls').classList.remove('hidden');
+        document.getElementById('fs-loading').classList.add('hidden');
+        document.getElementById('fs-error').classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+}
+
+function retakeFacePhoto() {
+    fsCapturedImageData = null;
+    showFsScreen('fs-start');
+    stopFsCamera();
+}
+
+function cancelFaceDetection() {
+    stopFsCamera();
+    fsCapturedImageData = null;
+    showFsScreen('fs-start');
+}
+
+async function analyzeFaceShape() {
+    document.getElementById('fs-preview-controls').classList.add('hidden');
+    document.getElementById('fs-loading').classList.remove('hidden');
+    document.getElementById('fs-error').classList.add('hidden');
+
+    try {
+        var landmarker = await initFaceLandmarker();
+
+        var img = new Image();
+        img.src = fsCapturedImageData;
+        await new Promise(function(resolve, reject) {
+            img.onload = resolve;
+            img.onerror = reject;
+        });
+
+        var result = landmarker.detect(img);
+
+        if (!result.faceLandmarks || result.faceLandmarks.length === 0) {
+            document.getElementById('fs-loading').classList.add('hidden');
+            document.getElementById('fs-preview-controls').classList.remove('hidden');
+            showFsError('No face detected. Please try again with a clearer photo. 얼굴이 감지되지 않았습니다. 더 선명한 사진으로 다시 시도해주세요.');
+            return;
+        }
+
+        var landmarks = result.faceLandmarks[0];
+        var shape = classifyFaceShape(landmarks);
+        showFsResult(shape);
+    } catch (e) {
+        document.getElementById('fs-loading').classList.add('hidden');
+        document.getElementById('fs-preview-controls').classList.remove('hidden');
+        console.error('Face analysis error:', e);
+        showFsError('Analysis failed. Please try again. 분석에 실패했습니다. 다시 시도해주세요.');
+    }
+}
+
+function classifyFaceShape(landmarks) {
+    // Key landmark indices (MediaPipe 468 points)
+    // Forehead top: 10, Chin bottom: 152
+    // Left face: 234, Right face: 454
+    // Left forehead: 67, Right forehead: 297
+    // Left jaw: 172, Right jaw: 397
+    // Left cheek: 116, Right cheek: 345
+    // Jaw angle left: 132, Jaw angle right: 361
+
+    var p = landmarks;
+    var faceHeight = dist(p[10], p[152]);
+    var faceWidth = dist(p[234], p[454]);
+    var foreheadWidth = dist(p[67], p[297]);
+    var jawWidth = dist(p[172], p[397]);
+    var cheekWidth = dist(p[116], p[345]);
+
+    // Jaw angle (how angular the jaw is)
+    var jawLeft = p[132];
+    var jawRight = p[361];
+    var chin = p[152];
+    var jawAngleLeft = angleBetween(p[234], jawLeft, chin);
+    var jawAngleRight = angleBetween(p[454], jawRight, chin);
+    var avgJawAngle = (jawAngleLeft + jawAngleRight) / 2;
+
+    // Ratios
+    var lengthWidthRatio = faceHeight / faceWidth;
+    var foreheadJawRatio = foreheadWidth / jawWidth;
+    var cheekFaceRatio = cheekWidth / faceWidth;
+
+    // Scoring system
+    var scores = { oval: 0, round: 0, square: 0, diamond: 0, heart: 0, long: 0 };
+
+    // Length/width ratio analysis
+    if (lengthWidthRatio > 1.55) {
+        scores.long += 35;
+        scores.oval += 10;
+    } else if (lengthWidthRatio > 1.35) {
+        scores.oval += 30;
+        scores.diamond += 15;
+        scores.heart += 10;
+    } else if (lengthWidthRatio > 1.15) {
+        scores.oval += 15;
+        scores.square += 20;
+        scores.round += 15;
+    } else {
+        scores.round += 35;
+        scores.square += 15;
+    }
+
+    // Forehead/jaw ratio analysis
+    if (foreheadJawRatio > 1.25) {
+        scores.heart += 30;
+        scores.diamond += 10;
+    } else if (foreheadJawRatio > 1.05) {
+        scores.oval += 15;
+        scores.heart += 15;
+    } else if (foreheadJawRatio > 0.9) {
+        scores.square += 20;
+        scores.round += 15;
+        scores.oval += 10;
+    } else {
+        scores.square += 15;
+        scores.round += 10;
+    }
+
+    // Cheekbone prominence
+    if (cheekFaceRatio > 0.95) {
+        scores.diamond += 25;
+        scores.round += 10;
+    } else if (cheekFaceRatio > 0.85) {
+        scores.oval += 15;
+        scores.round += 10;
+    } else {
+        scores.long += 10;
+        scores.square += 5;
+    }
+
+    // Jaw angle analysis
+    if (avgJawAngle > 155) {
+        scores.square += 25;
+    } else if (avgJawAngle > 140) {
+        scores.square += 15;
+        scores.oval += 10;
+    } else if (avgJawAngle > 120) {
+        scores.oval += 15;
+        scores.round += 10;
+    } else {
+        scores.heart += 15;
+        scores.diamond += 10;
+    }
+
+    // Find the highest score
+    var maxShape = 'oval';
+    var maxScore = 0;
+    var totalScore = 0;
+    var keys = Object.keys(scores);
+    for (var i = 0; i < keys.length; i++) {
+        totalScore += scores[keys[i]];
+        if (scores[keys[i]] > maxScore) {
+            maxScore = scores[keys[i]];
+            maxShape = keys[i];
+        }
+    }
+
+    var confidence = Math.min(Math.round((maxScore / totalScore) * 100 * 1.5), 95);
+    confidence = Math.max(confidence, 55);
+
+    return { shape: maxShape, confidence: confidence, scores: scores };
+}
+
+function dist(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+function angleBetween(a, b, c) {
+    var ab = { x: a.x - b.x, y: a.y - b.y };
+    var cb = { x: c.x - b.x, y: c.y - b.y };
+    var dot = ab.x * cb.x + ab.y * cb.y;
+    var magAB = Math.sqrt(ab.x * ab.x + ab.y * ab.y);
+    var magCB = Math.sqrt(cb.x * cb.x + cb.y * cb.y);
+    var cosAngle = dot / (magAB * magCB);
+    cosAngle = Math.max(-1, Math.min(1, cosAngle));
+    return Math.acos(cosAngle) * (180 / Math.PI);
+}
+
+function showFsResult(result) {
+    var data = fsShapeData[result.shape];
+    var tipsHtml = '';
+    for (var i = 0; i < data.tips.length; i++) {
+        tipsHtml += '<li>' + data.tips[i] + '</li>';
+    }
+
+    // Build all shapes reference grid
+    var shapesRefHtml = '<div class="fs-ref-grid">';
+    var shapeKeys = Object.keys(fsShapeData);
+    for (var j = 0; j < shapeKeys.length; j++) {
+        var s = fsShapeData[shapeKeys[j]];
+        var isActive = shapeKeys[j] === result.shape ? ' fs-ref-active' : '';
+        shapesRefHtml += '<div class="fs-ref-item' + isActive + '">' +
+            '<span class="face-shape-icon">' + s.emoji + '</span>' +
+            '<strong>' + s.name + ' ' + s.korean + '</strong>' +
+            '<p>' + s.description + '</p></div>';
+    }
+    shapesRefHtml += '</div>';
+
+    document.getElementById('fs-result-content').innerHTML =
+        '<div class="result-emoji">' + data.emoji + '</div>' +
+        '<h2 class="result-type">' + data.name + ' Face</h2>' +
+        '<p class="result-type-korean">' + data.korean + '</p>' +
+        '<div class="fs-confidence">Confidence 신뢰도: ' + result.confidence + '%</div>' +
+        '<div class="result-description"><h4>About Your Face Shape</h4><p>' + data.description + '</p>' +
+        '<h4>Styling Tips 스타일링 팁</h4><ul>' + tipsHtml + '</ul></div>' +
+        '<div class="fs-ref-section"><h4>All Face Shapes 전체 얼굴형 가이드</h4>' + shapesRefHtml + '</div>' +
+        '<div class="fs-result-buttons">' +
+        '<button class="primary-btn" onclick="retryFaceShape()">🔄 Try Again 다시하기</button>' +
+        '</div>';
+
+    showFsScreen('fs-result');
+    document.getElementById('fs-result-content').classList.add('animated');
+    createConfetti();
+}
+
+function retryFaceShape() {
+    fsCapturedImageData = null;
+    document.getElementById('fs-result-content').classList.remove('animated');
+    showFsScreen('fs-start');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
