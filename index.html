@@ -2194,19 +2194,46 @@ var fsShapeData = {
     }
 };
 
+async function waitForMediaPipe(maxWait) {
+    var start = Date.now();
+    while (!window.FaceLandmarker || !window.FilesetResolver) {
+        if (Date.now() - start > maxWait) {
+            throw new Error('MediaPipe failed to load. Please refresh and try again.');
+        }
+        await new Promise(function(r) { setTimeout(r, 200); });
+    }
+}
+
 async function initFaceLandmarker() {
     if (fsFaceLandmarker) return fsFaceLandmarker;
+
+    await waitForMediaPipe(10000);
+
     var vision = await window.FilesetResolver.forVisionTasks(
         'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm'
     );
-    fsFaceLandmarker = await window.FaceLandmarker.createFromOptions(vision, {
-        baseOptions: {
-            modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
-            delegate: 'GPU'
-        },
-        runningMode: 'IMAGE',
-        numFaces: 1
-    });
+
+    // Try GPU first, fall back to CPU
+    try {
+        fsFaceLandmarker = await window.FaceLandmarker.createFromOptions(vision, {
+            baseOptions: {
+                modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
+                delegate: 'GPU'
+            },
+            runningMode: 'IMAGE',
+            numFaces: 1
+        });
+    } catch (gpuErr) {
+        console.warn('GPU delegate failed, falling back to CPU:', gpuErr);
+        fsFaceLandmarker = await window.FaceLandmarker.createFromOptions(vision, {
+            baseOptions: {
+                modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
+                delegate: 'CPU'
+            },
+            runningMode: 'IMAGE',
+            numFaces: 1
+        });
+    }
     return fsFaceLandmarker;
 }
 
@@ -2373,7 +2400,10 @@ async function analyzeFaceShape() {
         document.getElementById('fs-loading').classList.add('hidden');
         document.getElementById('fs-preview-controls').classList.remove('hidden');
         console.error('Face analysis error:', e);
-        showFsError('Analysis failed. Please try again. 분석에 실패했습니다. 다시 시도해주세요.');
+        var msg = (e.message && e.message.indexOf('MediaPipe') !== -1)
+            ? 'AI model is loading. Please wait a moment and try again. AI 모델을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'
+            : 'Analysis failed. Please try again. 분석에 실패했습니다. 다시 시도해주세요.';
+        showFsError(msg);
     }
 }
 
